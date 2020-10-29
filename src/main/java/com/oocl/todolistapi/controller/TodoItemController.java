@@ -32,4 +32,11 @@ public class TodoItemController {
         todoItemService.deleteTodoItem(id);
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public TodoItem updateTodoItem(@PathVariable Integer id,@RequestBody TodoItem todoItem) {
+        return todoItemService.update(id,todoItem);
+    }
+
+
 }

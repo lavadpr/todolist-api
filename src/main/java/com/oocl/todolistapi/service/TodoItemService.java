@@ -5,6 +5,7 @@ import com.oocl.todolistapi.repository.TodoItemRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TodoItemService {
@@ -24,5 +25,11 @@ public class TodoItemService {
 
     public void deleteTodoItem(Integer id) {
         todoItemRepository.deleteById(id);
+    }
+    //TODO add exception
+    public TodoItem update(Integer id, TodoItem todoItem) {
+        TodoItem todoItem1 = todoItemRepository.findById(id).get();
+        todoItem1.setDone(todoItem.getDone());
+        return todoItemRepository.save(todoItem1);
     }
 }
