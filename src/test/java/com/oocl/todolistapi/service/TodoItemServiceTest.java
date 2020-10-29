@@ -5,7 +5,6 @@ import com.oocl.todolistapi.repository.TodoItemRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,7 +76,7 @@ class TodoItemServiceTest {
         TodoItem expected = new TodoItem("test", false);
         //when
         when(todoItemRepository.findById(expected.getId())).thenReturn(java.util.Optional.of(expected));
-        TodoItem actual = todoItemService.retreive(expected.getId());
+        TodoItem actual = todoItemService.retrieve(expected.getId());
         //then
         assertEquals(expected, actual);
     }

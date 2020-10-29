@@ -1,11 +1,13 @@
 package com.oocl.todolistapi.service;
 
+import com.oocl.todolistapi.exception.TodoItemException;
 import com.oocl.todolistapi.model.TodoItem;
 import com.oocl.todolistapi.repository.TodoItemRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
+import static com.oocl.todolistapi.exception.TodoItemException.TODO_NOT_FOUND;
 
 @Service
 public class TodoItemService {
@@ -26,14 +28,15 @@ public class TodoItemService {
     public void deleteTodoItem(Integer id) {
         todoItemRepository.deleteById(id);
     }
-    //TODO add exception
+
     public TodoItem update(Integer id, TodoItem todoItem) {
-        TodoItem todoItem1 = todoItemRepository.findById(id).get();
-        todoItem1.setDone(todoItem.getDone());
-        return todoItemRepository.save(todoItem1);
+        TodoItem retrievedTodoItem = retrieve(id);
+        retrievedTodoItem.setDone(todoItem.getDone());
+        return todoItemRepository.save(retrievedTodoItem);
     }
 
-    public TodoItem retreive(Integer id) {
-        return todoItemRepository.findById(id).get();
+    public TodoItem retrieve(Integer id) {
+        return todoItemRepository.findById(id)
+                .orElseThrow(() -> new TodoItemException(TODO_NOT_FOUND));
     }
 }

@@ -23,7 +23,7 @@ public class TodoItemController {
 
     @GetMapping("/{id}")
     public TodoItem getById(@PathVariable Integer id) {
-        return todoItemService.retreive(id);
+        return todoItemService.retrieve(id);
     }
 
     @PostMapping

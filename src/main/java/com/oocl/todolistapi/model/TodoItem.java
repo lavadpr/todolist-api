@@ -18,6 +18,10 @@ public class TodoItem {
         this.done = done;
     }
 
+    public TodoItem(){
+
+    }
+
     public Integer getId() {
         return id;
     }
@@ -42,7 +46,5 @@ public class TodoItem {
         this.done = done;
     }
 
-    public TodoItem(){
 
-    }
 }
