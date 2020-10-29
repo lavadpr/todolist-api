@@ -82,7 +82,18 @@ class TodoItemIntegrationTest {
     }
 
     @Test
-    void update() {
+        void should_update_task_when_update() throws Exception {
+        TodoItem oldTask = todoItemRepository.save(new TodoItem("bee",false));
+        String newTaskAsJson = "{\n" +
+                "    \"text\": \"bee\",\n" +
+                "    \"done\": true\n" +
+                "}";
+        mockMvc.perform(put("/todos/{id}",oldTask.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(newTaskAsJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.text").value("bee"))
+                .andExpect(jsonPath("$.done").value(true));
     }
 
     @Test
