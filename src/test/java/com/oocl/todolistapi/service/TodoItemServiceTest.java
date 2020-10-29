@@ -46,7 +46,7 @@ class TodoItemServiceTest {
     }
 
     @Test
-    void deleteTodoItem() {
+    void should_remove_todo_when_delete_by_id() {
         //given
         TodoItem todoItem = new TodoItem("test", false);
         //when
@@ -72,6 +72,13 @@ class TodoItemServiceTest {
     }
 
     @Test
-    void retreive() {
+    void should_return_correct_todo_when_get_by_id() {
+        //given
+        TodoItem expected = new TodoItem("test", false);
+        //when
+        when(todoItemRepository.findById(expected.getId())).thenReturn(java.util.Optional.of(expected));
+        TodoItem actual = todoItemService.retreive(expected.getId());
+        //then
+        assertEquals(expected, actual);
     }
 }
