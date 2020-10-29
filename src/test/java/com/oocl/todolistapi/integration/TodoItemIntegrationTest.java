@@ -86,6 +86,14 @@ class TodoItemIntegrationTest {
     }
 
     @Test
-    void retreive() {
+    void should_return_correct_todo_when_get_by_id() throws Exception {
+        TodoItem todoItem =  todoItemRepository.save(new TodoItem("test", false));
+
+        //when
+        //then
+        mockMvc.perform(get("/todos/" + todoItem.getId()))
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.text").value("test"))
+                .andExpect(jsonPath("$.done").value(false));
     }
 }
