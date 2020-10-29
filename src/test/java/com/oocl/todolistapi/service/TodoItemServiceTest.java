@@ -35,7 +35,13 @@ class TodoItemServiceTest {
     }
 
     @Test
-    void create() {
+    void should_return_todos_when_create_given_task() {
+        //given
+        TodoItem todoItem = new TodoItem("RaactJs",false);
+        //when
+        when(todoItemRepository.save(todoItem)).thenReturn(todoItem);
+        //then
+        assertEquals(todoItemService.create(todoItem),todoItem);
     }
 
     @Test
