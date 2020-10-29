@@ -10,8 +10,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class TodoItemServiceTest {
     private TodoItemRepository todoItemRepository;
@@ -46,6 +45,12 @@ class TodoItemServiceTest {
 
     @Test
     void deleteTodoItem() {
+        //given
+        TodoItem todoItem = new TodoItem("test", false);
+        //when
+        todoItemService.deleteTodoItem(todoItem.getId());
+        //then
+        verify(todoItemRepository, times(1)).deleteById(todoItem.getId());
     }
 
     @Test
