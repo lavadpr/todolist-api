@@ -32,4 +32,8 @@ public class TodoItemService {
         todoItem1.setDone(todoItem.getDone());
         return todoItemRepository.save(todoItem1);
     }
+
+    public TodoItem retreive(Integer id) {
+        return todoItemRepository.findById(id).get();
+    }
 }

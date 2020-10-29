@@ -21,6 +21,11 @@ public class TodoItemController {
         return todoItemService.getAllEmployees();
     }
 
+    @GetMapping("/{id}")
+    public TodoItem getById(@PathVariable Integer id) {
+        return todoItemService.retreive(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TodoItem addTodoItem(@RequestBody TodoItem todoItem) {
