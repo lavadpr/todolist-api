@@ -1,35 +1,44 @@
 package com.oocl.todolistapi.controller;
 
+import com.oocl.todolistapi.dto.TodoItemRequest;
+import com.oocl.todolistapi.dto.TodoItemResponse;
+import com.oocl.todolistapi.mapper.TodoItemMapper;
 import com.oocl.todolistapi.model.TodoItem;
 import com.oocl.todolistapi.service.TodoItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/todos")
 public class TodoItemController {
     private final TodoItemService todoItemService;
+    private final TodoItemMapper todoItemMapper;
 
-    public TodoItemController(TodoItemService todoItemService) {
+    public TodoItemController(TodoItemService todoItemService, TodoItemMapper todoItemMapper) {
         this.todoItemService = todoItemService;
+        this.todoItemMapper = todoItemMapper;
     }
 
     @GetMapping
-    public List<TodoItem> getAll() {
-        return todoItemService.getAll();
+    public List<TodoItemResponse> getAll() {
+        List<TodoItem> todoItems = todoItemService.getAll();
+        return todoItems.stream().map(todoItemMapper::toResponse).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public TodoItem getById(@PathVariable Integer id) {
-        return todoItemService.retrieve(id);
+    public TodoItemResponse getById(@PathVariable Integer id) {
+        TodoItem  todoItem = todoItemService.retrieve(id);
+        return todoItemMapper.toResponse(todoItem);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TodoItem addTodoItem(@RequestBody TodoItem todoItem) {
-        return todoItemService.create(todoItem);
+    public TodoItemResponse addTodoItem(@RequestBody TodoItemRequest todoItemRequest) {
+        TodoItem todoItem =todoItemService.create(todoItemMapper.toEntity(todoItemRequest));
+        return todoItemMapper.toResponse(todoItem);
     }
 
     @DeleteMapping("/{id}")
@@ -39,8 +48,9 @@ public class TodoItemController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public TodoItem updateTodoItem(@PathVariable Integer id,@RequestBody TodoItem todoItem) {
-        return todoItemService.update(id,todoItem);
+    public TodoItemResponse updateTodoItem(@PathVariable Integer id,@RequestBody TodoItemRequest todoItemRequest) {
+        TodoItem todoItem = todoItemService.update(id,todoItemMapper.toEntity(todoItemRequest));
+        return todoItemMapper.toResponse(todoItem);
     }
 
 
