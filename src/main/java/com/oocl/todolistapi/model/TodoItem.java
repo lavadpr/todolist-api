@@ -1,0 +1,20 @@
+package com.oocl.todolistapi.model;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class TodoItem {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
+    String text;
+    Boolean done;
+
+    public TodoItem(String text, Boolean done) {
+        this.text = text;
+        this.done = done;
+    }
+}
