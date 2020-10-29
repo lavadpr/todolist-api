@@ -17,4 +17,8 @@ public class TodoItemService {
     public List<TodoItem> getAllEmployees() {
         return todoItemRepository.findAll();
     }
+
+    public TodoItem create(TodoItem todoItem) {
+        return todoItemRepository.save(todoItem);
+    }
 }
