@@ -7,8 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
+import static java.util.Optional.of;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -54,7 +56,19 @@ class TodoItemServiceTest {
     }
 
     @Test
-    void update() {
+    void should_return_updated_task_when_update_given_update_details() {
+        //given
+        TodoItem oldTask = new TodoItem("ReactJs", false);
+        TodoItem expectedTask = new TodoItem("ReactJs",  true);
+        TodoItem todoItem = new TodoItem();
+
+        Optional<TodoItem> optionalTask = of(expectedTask);
+        when(todoItemRepository.findById(oldTask.getId())).thenReturn(optionalTask);
+        when(todoItemRepository.save(optionalTask.get())).thenReturn(expectedTask);
+        //when
+        TodoItem updatedTask = todoItemService.update(todoItem.getId(), todoItem);
+        //then
+        assertSame(expectedTask,updatedTask);
     }
 
     @Test
