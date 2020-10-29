@@ -15,7 +15,7 @@ public class TodoItemService {
         this.todoItemRepository = todoItemRepository;
     }
 
-    public List<TodoItem> getAllEmployees() {
+    public List<TodoItem> getAll() {
         return todoItemRepository.findAll();
     }
 
